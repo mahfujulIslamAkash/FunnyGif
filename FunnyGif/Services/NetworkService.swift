@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class NetworkService{
     static var shared = NetworkService()
@@ -96,5 +97,24 @@ final class NetworkService{
     }
     func getGifResults()->[Gif]?{
         return result
+    }
+    
+    func gettingData(_ gifPath: String, completion: @escaping(Data?)->Void){
+        if let url = URL(string: gifPath){
+            URLSession.shared.dataTask(with: URL(string: gifPath)!, completionHandler: {data, response, error in
+                if let error = error{
+                    print(error)
+                }else{
+                    if let data = data{
+                        completion(data)
+                    }else{
+                        completion(nil)
+                    }
+                    
+                }
+            }).resume()
+        }else{
+            completion(nil)
+        }
     }
 }
