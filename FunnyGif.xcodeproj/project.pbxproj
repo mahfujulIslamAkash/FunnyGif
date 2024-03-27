@@ -9,13 +9,20 @@
 /* Begin PBXBuildFile section */
 		35D4CB8A2BB4208300EF706D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CB892BB4208300EF706D /* AppDelegate.swift */; };
 		35D4CB8C2BB4208300EF706D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CB8B2BB4208300EF706D /* SceneDelegate.swift */; };
-		35D4CB8E2BB4208300EF706D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CB8D2BB4208300EF706D /* ViewController.swift */; };
+		35D4CB8E2BB4208300EF706D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CB8D2BB4208300EF706D /* HomeViewController.swift */; };
 		35D4CB912BB4208300EF706D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35D4CB8F2BB4208300EF706D /* Main.storyboard */; };
 		35D4CB932BB4208400EF706D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35D4CB922BB4208400EF706D /* Assets.xcassets */; };
 		35D4CB962BB4208400EF706D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35D4CB942BB4208400EF706D /* LaunchScreen.storyboard */; };
 		35D4CBA12BB4208400EF706D /* FunnyGifTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CBA02BB4208400EF706D /* FunnyGifTests.swift */; };
 		35D4CBAB2BB4208400EF706D /* FunnyGifUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CBAA2BB4208400EF706D /* FunnyGifUITests.swift */; };
 		35D4CBAD2BB4208400EF706D /* FunnyGifUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CBAC2BB4208400EF706D /* FunnyGifUITestsLaunchTests.swift */; };
+		35D4CBC92BB4227300EF706D /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CBC02BB4227300EF706D /* Date+Extension.swift */; };
+		35D4CBCB2BB4227300EF706D /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CBC22BB4227300EF706D /* UIView+Extension.swift */; };
+		35D4CBCD2BB4227300EF706D /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CBC42BB4227300EF706D /* UILabel+Extension.swift */; };
+		35D4CBCE2BB4227300EF706D /* CGFloat+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CBC52BB4227300EF706D /* CGFloat+Extension.swift */; };
+		35D4CBCF2BB4227300EF706D /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CBC62BB4227300EF706D /* UIViewController+Extension.swift */; };
+		35D4CBD02BB4227300EF706D /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CBC72BB4227300EF706D /* UIImage+Extension.swift */; };
+		35D4CBD12BB4227300EF706D /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CBC82BB4227300EF706D /* UIColor+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +46,7 @@
 		35D4CB862BB4208300EF706D /* FunnyGif.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FunnyGif.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35D4CB892BB4208300EF706D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		35D4CB8B2BB4208300EF706D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		35D4CB8D2BB4208300EF706D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		35D4CB8D2BB4208300EF706D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		35D4CB902BB4208300EF706D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		35D4CB922BB4208400EF706D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		35D4CB952BB4208400EF706D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +56,13 @@
 		35D4CBA62BB4208400EF706D /* FunnyGifUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FunnyGifUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35D4CBAA2BB4208400EF706D /* FunnyGifUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunnyGifUITests.swift; sourceTree = "<group>"; };
 		35D4CBAC2BB4208400EF706D /* FunnyGifUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunnyGifUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		35D4CBC02BB4227300EF706D /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		35D4CBC22BB4227300EF706D /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		35D4CBC42BB4227300EF706D /* UILabel+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
+		35D4CBC52BB4227300EF706D /* CGFloat+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extension.swift"; sourceTree = "<group>"; };
+		35D4CBC62BB4227300EF706D /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		35D4CBC72BB4227300EF706D /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		35D4CBC82BB4227300EF706D /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +120,6 @@
 				35D4CBBD2BB420C100EF706D /* Supports */,
 				35D4CB892BB4208300EF706D /* AppDelegate.swift */,
 				35D4CB8B2BB4208300EF706D /* SceneDelegate.swift */,
-				35D4CB8D2BB4208300EF706D /* ViewController.swift */,
 				35D4CB8F2BB4208300EF706D /* Main.storyboard */,
 				35D4CB922BB4208400EF706D /* Assets.xcassets */,
 				35D4CB942BB4208400EF706D /* LaunchScreen.storyboard */,
@@ -142,6 +155,7 @@
 		35D4CBBA2BB420A700EF706D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				35D4CBBE2BB4221900EF706D /* HomeView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -163,8 +177,31 @@
 		35D4CBBD2BB420C100EF706D /* Supports */ = {
 			isa = PBXGroup;
 			children = (
+				35D4CBBF2BB4224E00EF706D /* Extensions */,
 			);
 			path = Supports;
+			sourceTree = "<group>";
+		};
+		35D4CBBE2BB4221900EF706D /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				35D4CB8D2BB4208300EF706D /* HomeViewController.swift */,
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
+		35D4CBBF2BB4224E00EF706D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				35D4CBC52BB4227300EF706D /* CGFloat+Extension.swift */,
+				35D4CBC02BB4227300EF706D /* Date+Extension.swift */,
+				35D4CBC82BB4227300EF706D /* UIColor+Extension.swift */,
+				35D4CBC72BB4227300EF706D /* UIImage+Extension.swift */,
+				35D4CBC42BB4227300EF706D /* UILabel+Extension.swift */,
+				35D4CBC22BB4227300EF706D /* UIView+Extension.swift */,
+				35D4CBC62BB4227300EF706D /* UIViewController+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,8 +335,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35D4CB8E2BB4208300EF706D /* ViewController.swift in Sources */,
+				35D4CBCD2BB4227300EF706D /* UILabel+Extension.swift in Sources */,
+				35D4CBCB2BB4227300EF706D /* UIView+Extension.swift in Sources */,
+				35D4CB8E2BB4208300EF706D /* HomeViewController.swift in Sources */,
+				35D4CBD12BB4227300EF706D /* UIColor+Extension.swift in Sources */,
+				35D4CBC92BB4227300EF706D /* Date+Extension.swift in Sources */,
 				35D4CB8A2BB4208300EF706D /* AppDelegate.swift in Sources */,
+				35D4CBCE2BB4227300EF706D /* CGFloat+Extension.swift in Sources */,
+				35D4CBCF2BB4227300EF706D /* UIViewController+Extension.swift in Sources */,
+				35D4CBD02BB4227300EF706D /* UIImage+Extension.swift in Sources */,
 				35D4CB8C2BB4208300EF706D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
