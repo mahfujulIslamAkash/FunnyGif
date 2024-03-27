@@ -99,6 +99,11 @@
 		35D4CB882BB4208300EF706D /* FunnyGif */ = {
 			isa = PBXGroup;
 			children = (
+				35D4CBB92BB420A100EF706D /* Models */,
+				35D4CBBA2BB420A700EF706D /* Views */,
+				35D4CBBB2BB420AF00EF706D /* ViewModels */,
+				35D4CBBC2BB420BA00EF706D /* Services */,
+				35D4CBBD2BB420C100EF706D /* Supports */,
 				35D4CB892BB4208300EF706D /* AppDelegate.swift */,
 				35D4CB8B2BB4208300EF706D /* SceneDelegate.swift */,
 				35D4CB8D2BB4208300EF706D /* ViewController.swift */,
@@ -125,6 +130,41 @@
 				35D4CBAC2BB4208400EF706D /* FunnyGifUITestsLaunchTests.swift */,
 			);
 			path = FunnyGifUITests;
+			sourceTree = "<group>";
+		};
+		35D4CBB92BB420A100EF706D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		35D4CBBA2BB420A700EF706D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		35D4CBBB2BB420AF00EF706D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		35D4CBBC2BB420BA00EF706D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		35D4CBBD2BB420C100EF706D /* Supports */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Supports;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
