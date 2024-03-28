@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+#warning("Here I implemented 2 API providers because I was getting some warning from gify, thats why I added 2nd one for testing purposes")
+
 final class NetworkService{
     static var shared = NetworkService()
     private let providerType: ProviderType = .gify
