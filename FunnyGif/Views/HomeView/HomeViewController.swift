@@ -76,7 +76,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GifCollectionViewCell
         cell.backgroundColor = UIColor.random
-        cell.url = homeViewModel.getPreviewUrl(indexPath)
+        cell.gifViewModel = homeViewModel.viewModelOfGif(indexPath)
         cell.update()
         return cell
     }

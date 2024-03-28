@@ -8,7 +8,7 @@
 import UIKit
 
 class GifCollectionViewCell: UICollectionViewCell {
-    var url: String?
+    
     let indicatorView: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView()
         view.hidesWhenStopped = true
@@ -23,6 +23,8 @@ class GifCollectionViewCell: UICollectionViewCell {
         
         return view
     }()
+    var gifViewModel = GifViewModel()
+    
     override init(frame: CGRect) {
         // Initialize your cell as usual
         super.init(frame: frame)
@@ -32,17 +34,12 @@ class GifCollectionViewCell: UICollectionViewCell {
     
     func update(){
         indicatorView.startAnimating()
-        if let url = url{
-            NetworkService.shared.gettingData(url, completion: {[weak self] data in
-                if let data = data{
-                    DispatchQueue.main.async {
-                        self?.gifView.image = UIImage.gifImageWithData(data)
-                        self?.indicatorView.stopAnimating()
-                    }
-                    
-                }
-            })
-        }
+        gifViewModel.gettingImageFromPath(completion: {[weak self] image, success in
+            DispatchQueue.main.async {
+                self?.gifView.image = image
+                self?.indicatorView.stopAnimating()
+            }
+        })
         
     }
     

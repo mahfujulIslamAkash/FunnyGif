@@ -99,9 +99,9 @@ final class NetworkService{
         return result
     }
     
-    func gettingData(_ gifPath: String, completion: @escaping(Data?)->Void){
-        if let url = URL(string: gifPath){
-            URLSession.shared.dataTask(with: URL(string: gifPath)!, completionHandler: {data, response, error in
+    func gettingDataOf(_ dataPath: String, completion: @escaping(Data?)->Void){
+        if let url = URL(string: dataPath){
+            URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
                 if let error = error{
                     print(error)
                 }else{
@@ -116,5 +116,20 @@ final class NetworkService{
         }else{
             completion(nil)
         }
+    }
+    
+    func gettingDataOf(_ dataUrl: URL, completion: @escaping(Data?)->Void){
+        URLSession.shared.dataTask(with: dataUrl, completionHandler: {data, response, error in
+            if let error = error{
+                print(error)
+            }else{
+                if let data = data{
+                    completion(data)
+                }else{
+                    completion(nil)
+                }
+                
+            }
+        }).resume()
     }
 }

@@ -39,11 +39,16 @@ class HomeViewModel{
             
         })
     }
-    func getPreviewUrl(_ indexPath: IndexPath) -> String{
+    private func getPreviewUrl(_ indexPath: IndexPath) -> String{
         guard let gifs = NetworkService.shared.getGifResults() else{
             return ""
         }
         guard let url = gifs[indexPath.row].placeHolder else { return "" }
         return url
+    }
+    
+    func viewModelOfGif(_ indexPath: IndexPath) -> GifViewModel{
+        let path = getPreviewUrl(indexPath)
+        return GifViewModel(path: path)
     }
 }
