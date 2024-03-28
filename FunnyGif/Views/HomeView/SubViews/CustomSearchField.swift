@@ -16,6 +16,7 @@ class CustomSearchField: UIView {
         // Drawing code
     }
     */
+    var searchText: String?
     lazy var statckView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
@@ -26,33 +27,43 @@ class CustomSearchField: UIView {
         stack.addArrangedSubview(textField)
         stack.addArrangedSubview(seachButton)
         stack.layer.borderWidth = 0.5
+        stack.backgroundColor = .white
+        stack.layer.cornerRadius = 4
+        stack.layer.masksToBounds = true
         return stack
     }()
     
     lazy var fieldIcon: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(systemName: "shippingbox")?.withAlignmentRectInsets(UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10))
+        view.image = UIImage(systemName: "shippingbox")?.withAlignmentRectInsets(UIEdgeInsets(top: -12, left: -12, bottom: -12, right: -12))
         view.widthAnchor.constraint(equalToConstant: motherSize.height).isActive = true
+        view.backgroundColor = .black
         view.tintColor = .white
-        view.layer.borderWidth = 0.5
+        view.layer.cornerRadius = 4
+        view.layer.masksToBounds = true
         
         return view
     }()
     
-    let textField: UIView = {
+    
+    
+    lazy var textField: UIView = {
         let view = UIView()
-        let textField = UITextField()
-        textField.layer.borderWidth = 0.5
-        textField.placeholder = "Search Gif"
-        view.addSubview(textField)
-        textField.anchorView(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 5)
+        view.addSubview(textFieldView)
+        textFieldView.anchorView(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 5)
         return view
+    }()
+    
+    lazy var textFieldView: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Search Gif"
+        textField.textColor = .black.withAlphaComponent(0.5)
+        return textField
     }()
     
     lazy var seachButton: UIButton = {
         let view = UIButton()
         view.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
-        view.layer.borderWidth = 0.5
         view.tintColor = .white
         view.widthAnchor.constraint(equalToConstant: motherSize.height).isActive = true
         view.backgroundColor = UIColor(hexString: "FF2DAF")
@@ -76,7 +87,9 @@ class CustomSearchField: UIView {
         
     }
     
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

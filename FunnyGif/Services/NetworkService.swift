@@ -10,18 +10,31 @@ import UIKit
 
 final class NetworkService{
     static var shared = NetworkService()
-    private let baseUrl: String = "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=25&offset=0&rating=G&lang=en&q="
+    private let providerType: ProviderType = .gify
+    private lazy var baseUrl: String = providerType == .gify ? "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=25&offset=0&rating=G&lang=en&q=" : "https://g.tenor.com/v1/search?q="
     private let searchText: String = "Trending"
     private var result: [Gif]?
     
     
     private func getUrl(_ searchText: String?) -> String{
         if let text = searchText{
-            return baseUrl+text
+            if providerType == .gify{
+                return baseUrl+text
+            }else{
+                return baseUrl+text+"&key=LIVDSRZULELA"
+            }
+            
         }
         else{
-            return baseUrl+self.searchText
+            if providerType == .gify{
+                return baseUrl+self.searchText
+            }else{
+                return baseUrl+self.searchText+"&key=LIVDSRZULELA"
+            }
+            
         }
+        
+        
         
     }
     private func getResponse(_ searchFor: String?, completion: @escaping(_ success: Bool)-> Void){
@@ -31,11 +44,30 @@ final class NetworkService{
         let ulrRequest = URLRequest(url: url)
         let urlSession = URLSession.shared.dataTask(with: ulrRequest, completionHandler: { [weak self] data, response, error in
             
-            guard let data = data, error == nil else {
-                print("Error: \(error?.localizedDescription ?? "Unknown error")")
-                return
+            if let error = error{
+                print("appError: ", error)
+                completion(false)
+            }else{
+                if self?.providerType == .gify{
+                    self?.parsingForGify(data: data, completion: {result in
+                        completion(result)
+                    })
+                }else{
+                    self?.parsingForTenor(data: data, completion: {result in
+                        completion(result)
+                    })
+                }
             }
+
             
+            
+        })
+        
+        urlSession.resume()
+    }
+    
+    private func parsingForGify(data: Data?, completion: @escaping(_ success: Bool)-> Void){
+        if let data = data{
             do {
                 // Deserialize JSON data
                 if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
@@ -67,7 +99,7 @@ final class NetworkService{
                             }
                             gifs.append(gif)
                         }
-                        self?.result = gifs
+                        result = gifs
                         completion(true)
                         
                     }
@@ -79,9 +111,57 @@ final class NetworkService{
                 print("Error parsing JSON: \(error)")
                 completion(false)
             }
-        })
-        
-        urlSession.resume()
+        }
+    }
+    
+    private func parsingForTenor(data: Data?, completion: @escaping(_ success: Bool)-> Void){
+        if let data = data{
+            do {
+                // Deserialize JSON data
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    // Accessing the entire JSON dictionary
+                    if let dataArray = json["results"] as? [[String: Any]] {
+                        var gifs: [Gif] = []
+                        for data in dataArray {
+                            var gif = Gif()
+                            if let id = data["id"] as? String{
+                                gif.id = id
+                            }
+                            if let url = data["url"] as? String{
+                                gif.url = url
+                            }
+                            if let medias = data["media"] as? [[String: Any]]{
+                                for media in medias{
+                                    if let nanoGif = media["nanogif"] as? [String: Any]{
+                                        if let previewUrl = nanoGif["url"] as? String{
+                                            gif.placeHolder = previewUrl
+                                        }
+                                    }
+                                    
+                                    if let gifObjc = media["gif"] as? [String: Any]{
+                                        if let originalUrl = gifObjc["url"] as? String{
+                                            gif.original = originalUrl
+                                        }
+                                    }
+                                }
+                                
+                                
+                            }
+                            gifs.append(gif)
+                        }
+                        result = gifs
+                        completion(true)
+                        
+                    }
+                } else {
+                    print("Invalid JSON format")
+                    completion(false)
+                }
+            } catch {
+                print("Error parsing JSON: \(error)")
+                completion(false)
+            }
+        }
     }
     
     func getTrendingGifs(completion: @escaping(_ success: Bool)-> Void){
@@ -132,4 +212,10 @@ final class NetworkService{
             }
         }).resume()
     }
+     
+}
+
+enum ProviderType{
+    case gify
+    case tenor
 }

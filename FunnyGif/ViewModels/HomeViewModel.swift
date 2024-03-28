@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class HomeViewModel{
     
@@ -13,10 +14,8 @@ class HomeViewModel{
         
     }
     var isLoaded: ObservableObject<Bool?> = ObservableObject(nil)
+    var isLoading: ObservableObject<Bool> = ObservableObject(true)
     
-    func getGifResults() -> [Gif]{
-        return []
-    }
     func countOfGifsResult() -> Int{
         guard let gifs = NetworkService.shared.getGifResults() else{
             return 0
@@ -34,21 +33,44 @@ class HomeViewModel{
     }
     
     func callApi(){
+        isLoading.value = true
         NetworkService.shared.getTrendingGifs(completion: {[weak self] success in
             self?.isLoaded.value = success
+            self?.isLoading.value = false
             
         })
     }
-    private func getPreviewUrl(_ indexPath: IndexPath) -> String{
+    
+    func callApi(_ searchedText: String?){
+        isLoading.value = true
+        NetworkService.shared.getSearchedGifs(searchedText, completion: {[weak self] success in
+            self?.isLoaded.value = success
+            self?.isLoading.value = false
+        })
+    }
+    private func getPreviewGifPath(_ indexPath: IndexPath) -> String{
         guard let gifs = NetworkService.shared.getGifResults() else{
             return ""
         }
-        guard let url = gifs[indexPath.row].placeHolder else { return "" }
-        return url
+        guard let path = gifs[indexPath.row].placeHolder else { return "" }
+        return path
+    }
+    
+    private func getOriginalGifPath(_ indexPath: IndexPath) -> String{
+        guard let gifs = NetworkService.shared.getGifResults() else{
+            return ""
+        }
+        guard let path = gifs[indexPath.row].original else { return "" }
+        return path
     }
     
     func viewModelOfGif(_ indexPath: IndexPath) -> GifViewModel{
-        let path = getPreviewUrl(indexPath)
+        let path = getPreviewGifPath(indexPath)
         return GifViewModel(path: path)
+    }
+    
+    func copyToClipboard(_ indexPath: IndexPath) {
+        let path = getOriginalGifPath(indexPath)
+        UIView.shared.copyToClipboard(path)
     }
 }

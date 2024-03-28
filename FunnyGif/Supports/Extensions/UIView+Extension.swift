@@ -284,3 +284,91 @@ extension UIView {
 
 }
 
+class ToastView: UIView {
+    private let messageLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    init(message: String) {
+        super.init(frame: CGRect.zero)
+        configureUI()
+        messageLabel.text = message
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func configureUI() {
+        backgroundColor = UIColor.white.withAlphaComponent(0.7)
+        layer.cornerRadius = 10
+        addSubview(messageLabel)
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+        ])
+    }
+    
+    func show(in view: UIView, duration: TimeInterval = 2) {
+        view.addSubview(self)
+        translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+        ])
+        
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
+            self.alpha = 1
+        }) { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+                self.dismiss()
+            }
+        }
+    }
+    
+    private func dismiss() {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
+            self.alpha = 0
+        }) { _ in
+            self.removeFromSuperview()
+        }
+    }
+    
+    
+}
+
+extension UIView{
+    static var shared = UIView()
+    
+#warning("for my test, please ignore this warning")
+    func showingToast(){
+        let toast = ToastView(message: "Successfully Copied Url")
+        if let window = UIApplication.shared.windows.first {
+            if let currentView = window.rootViewController?.view{
+                DispatchQueue.main.async {
+                    toast.show(in: currentView)
+                }
+            }
+            
+        } else {
+            // Handle the case where there is no window
+            print("No window found")
+        }
+        
+    }
+    func copyToClipboard(_ path: String) {
+        let pasteboard = UIPasteboard.general
+        
+        // Set the text to be copied
+        pasteboard.string = path
+        showingToast()
+    }
+}
