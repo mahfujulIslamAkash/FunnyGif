@@ -32,21 +32,6 @@ class HomeViewModel{
         return CGSize(width: width, height: width)
     }
     
-//    func callApi(_ searchedText: String?){
-//        isLoading.value = true
-//        NetworkService.shared.getTrendingGifs(completion: {[weak self] success in
-//            if success{
-//                self?.isLoaded.value = success
-//                self?.isLoading.value = false
-//            }else{
-//                self?.error.value = true
-//                self?.isLoading.value = false
-//            }
-//            
-//            
-//        })
-//    }
-    
     func callApi(_ searchedText: String?){
         checkInternet(completion: {[weak self] success in
             if success{
@@ -99,6 +84,7 @@ class HomeViewModel{
         return GifViewModel(path: path)
     }
     
+    //MARK: testing purpose for mine
     func copyToClipboard(_ indexPath: IndexPath) {
         let path = getOriginalGifPath(indexPath)
         UIView.shared.copyToClipboard(path)

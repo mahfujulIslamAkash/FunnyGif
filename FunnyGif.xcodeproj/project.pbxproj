@@ -244,17 +244,9 @@
 		35D4CBDE2BB4A97100EF706D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				35D4CBE12BB52EF500EF706D /* GifView */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		35D4CBE12BB52EF500EF706D /* GifView */ = {
-			isa = PBXGroup;
-			children = (
 				35D4CBDF2BB4A98D00EF706D /* GifCollectionViewCell.swift */,
 			);
-			path = GifView;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

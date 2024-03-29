@@ -34,39 +34,41 @@ class GifCollectionViewCell: UICollectionViewCell {
         // Initialize your cell as usual
         super.init(frame: frame)
         contentView.addSubview(gifView)
-//        contentView.layer.borderWidth = 0.5
-//        contentView.layer.cornerRadius = 4
-//        contentView.layer.masksToBounds = true
-//        contentView.clipsToBounds = true
         gifView.anchorView(top: contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor)
     }
     
+    //MARK: Setup Binders
     func setupBinders(){
         setupLoadedBinder()
         setupIsLoadingBinder()
         gifViewModel.fetchGifImage()
     }
     
+    //This binder will trigger after fetching online data
     private func setupLoadedBinder(){
         gifViewModel.isLoaded.binds({[weak self] success in
-            self?.update()
+            if success{
+                self?.updateUI()
+            }
+            
         })
     }
     
+    //This binder will trigger when loading need to change its state
     private func setupIsLoadingBinder(){
         gifViewModel.isLoading.binds({[weak self] isLoading in
             self?.loadingAnimation(isLoading)
         })
     }
     
-    private func update(){
-        
+    private func updateUI(){
         DispatchQueue.main.async {[weak self] in
             self?.gifView.image = self?.gifViewModel.getGifImage()
             self?.indicatorView.stopAnimating()
         }
         
     }
+    
     private func loadingAnimation(_ isLoading: Bool){
         if isLoading{
             DispatchQueue.main.async {[weak self] in
