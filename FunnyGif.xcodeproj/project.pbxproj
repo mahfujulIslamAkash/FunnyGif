@@ -30,7 +30,6 @@
 		35D4CBDD2BB4932900EF706D /* ObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CBDC2BB4932900EF706D /* ObservableObject.swift */; };
 		35D4CBE02BB4A98D00EF706D /* GifCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CBDF2BB4A98D00EF706D /* GifCollectionViewCell.swift */; };
 		35D4CBE32BB52F1A00EF706D /* GifViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CBE22BB52F1A00EF706D /* GifViewModel.swift */; };
-		35D4CBE62BB5692F00EF706D /* SearchFieldProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D4CBE52BB5692F00EF706D /* SearchFieldProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,7 +77,6 @@
 		35D4CBDC2BB4932900EF706D /* ObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableObject.swift; sourceTree = "<group>"; };
 		35D4CBDF2BB4A98D00EF706D /* GifCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifCollectionViewCell.swift; sourceTree = "<group>"; };
 		35D4CBE22BB52F1A00EF706D /* GifViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifViewModel.swift; sourceTree = "<group>"; };
-		35D4CBE52BB5692F00EF706D /* SearchFieldProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFieldProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,7 +195,6 @@
 		35D4CBBD2BB420C100EF706D /* Supports */ = {
 			isa = PBXGroup;
 			children = (
-				35D4CBE42BB5691600EF706D /* Protocols */,
 				35D4CBDB2BB4930100EF706D /* Observer */,
 				35D4CBBF2BB4224E00EF706D /* Extensions */,
 			);
@@ -258,14 +255,6 @@
 				35D4CBDF2BB4A98D00EF706D /* GifCollectionViewCell.swift */,
 			);
 			path = GifView;
-			sourceTree = "<group>";
-		};
-		35D4CBE42BB5691600EF706D /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				35D4CBE52BB5692F00EF706D /* SearchFieldProtocol.swift */,
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -411,7 +400,6 @@
 				35D4CB8A2BB4208300EF706D /* AppDelegate.swift in Sources */,
 				35D4CBCE2BB4227300EF706D /* CGFloat+Extension.swift in Sources */,
 				35D4CBD42BB4247C00EF706D /* CustomSearchField.swift in Sources */,
-				35D4CBE62BB5692F00EF706D /* SearchFieldProtocol.swift in Sources */,
 				35D4CBDA2BB4912E00EF706D /* HomeViewModel.swift in Sources */,
 				35D4CBCF2BB4227300EF706D /* UIViewController+Extension.swift in Sources */,
 				35D4CBD02BB4227300EF706D /* UIImage+Extension.swift in Sources */,

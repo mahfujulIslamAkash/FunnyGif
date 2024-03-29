@@ -2,7 +2,6 @@
 //  UIImage+Extension.swift
 //  WalkiTalki-Redesign
 //
-//  Created by Appnap Mahfuj on 7/3/24.
 //
 
 import Foundation

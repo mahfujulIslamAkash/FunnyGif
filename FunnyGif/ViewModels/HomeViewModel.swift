@@ -2,7 +2,6 @@
 //  HomeViewModel.swift
 //  FunnyGif
 //
-//  Created by Appnap Mahfuj on 27/3/24.
 //
 
 import Foundation
