@@ -48,7 +48,10 @@ class CustomSearchField: UIView {
     
     lazy var textFieldView: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Search Gif"
+        textField.attributedPlaceholder  = NSAttributedString(
+            string: "Search Gif",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.3)]
+        )
         textField.textColor = .black.withAlphaComponent(0.5)
         return textField
     }()

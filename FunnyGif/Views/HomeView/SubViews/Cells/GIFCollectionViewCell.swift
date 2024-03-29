@@ -6,7 +6,7 @@
 
 import UIKit
 
-class GifCollectionViewCell: UICollectionViewCell {
+class GIFCollectionViewCell: UICollectionViewCell {
     
     let indicatorView: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView()
@@ -28,7 +28,7 @@ class GifCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    var gifViewModel = GifViewModel()
+    var gifViewModel = GIFViewModel()
     
     override init(frame: CGRect) {
         // Initialize your cell as usual

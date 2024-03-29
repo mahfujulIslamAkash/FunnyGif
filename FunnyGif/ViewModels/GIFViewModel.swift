@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 
-final class GifViewModel{
+final class GIFViewModel{
     var isLoaded: ObservableObject<Bool> = ObservableObject(false)
     var isLoading: ObservableObject<Bool> = ObservableObject(true)
     private var image: UIImage?

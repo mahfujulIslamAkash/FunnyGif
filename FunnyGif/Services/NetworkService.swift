@@ -217,12 +217,11 @@ final class NetworkService{
     }
     
     //This func is helping to detect internet connection
-    static func checkConnectivity(completion: @escaping (Bool) -> Void) {
+    func checkConnectivity(completion: @escaping (Bool) -> Void) {
             guard let url = URL(string: "https://www.apple.com") else {
                 completion(false) // Invalid URL
                 return
             }
-            
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
                 if let error = error as NSError?, error.domain == NSURLErrorDomain {
                     // Error occurred, indicating no internet connection

@@ -9,15 +9,16 @@ import UIKit
 
 class HomeViewModel{
     
-    init(){
-        
+    static var shared = NetworkService()
+    init(_ searchText: String?){
+        callApi(searchText)
     }
     var isLoaded: ObservableObject<Bool?> = ObservableObject(nil)
     var isLoading: ObservableObject<Bool> = ObservableObject(true)
     var error: ObservableObject<Bool?> = ObservableObject(nil)
     
     func countOfGifsResult() -> Int{
-        guard let gifs = NetworkService.shared.getGifResults() else{
+        guard let gifs = HomeViewModel.shared.getGifResults() else{
             return 0
         }
         return gifs.count
@@ -42,7 +43,7 @@ class HomeViewModel{
     
     private func fetchingData(_ searchedText: String?){
         isLoading.value = true
-        NetworkService.shared.getSearchedGifs(searchedText, completion: {[weak self] success in
+        HomeViewModel.shared.getSearchedGifs(searchedText, completion: {[weak self] success in
             if success{
                 self?.isLoaded.value = success
                 self?.isLoading.value = false
@@ -54,7 +55,7 @@ class HomeViewModel{
     }
     
     private func checkInternet(completion: @escaping(Bool)->Void){
-        NetworkService.checkConnectivity(completion: {[weak self] havingInternet in
+        HomeViewModel.shared.checkConnectivity(completion: {[weak self] havingInternet in
             if havingInternet{
                 completion(true)
             }else{
@@ -64,7 +65,7 @@ class HomeViewModel{
     }
     
     private func getPreviewGifPath(_ indexPath: IndexPath) -> String{
-        guard let gifs = NetworkService.shared.getGifResults() else{
+        guard let gifs = HomeViewModel.shared.getGifResults() else{
             return ""
         }
         guard let path = gifs[indexPath.row].placeHolder else { return "" }
@@ -72,16 +73,16 @@ class HomeViewModel{
     }
     
     private func getOriginalGifPath(_ indexPath: IndexPath) -> String{
-        guard let gifs = NetworkService.shared.getGifResults() else{
+        guard let gifs = HomeViewModel.shared.getGifResults() else{
             return ""
         }
         guard let path = gifs[indexPath.row].original else { return "" }
         return path
     }
     
-    func viewModelOfGif(_ indexPath: IndexPath) -> GifViewModel{
+    func viewModelOfGif(_ indexPath: IndexPath) -> GIFViewModel{
         let path = getPreviewGifPath(indexPath)
-        return GifViewModel(path: path)
+        return GIFViewModel(path: path)
     }
     
     //MARK: testing purpose for mine
