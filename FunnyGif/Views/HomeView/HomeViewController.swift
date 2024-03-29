@@ -71,6 +71,7 @@ class HomeViewController: UIViewController {
         homeViewModel.callApi(nil)
     }
     
+    //This binder will trigger after fetching online data
     private func setupLoadedBinder(){
         homeViewModel.isLoaded.binds({[weak self] success in
             if let _ = success{
@@ -83,12 +84,14 @@ class HomeViewController: UIViewController {
         })
     }
     
+    //This binder will trigger when loading need to change its state
     private func setupIsLoadingBinder(){
         homeViewModel.isLoading.binds({[weak self] isLoading in
             self?.loadingAnimation(isLoading)
         })
     }
     
+    //This binder will trigger after fetching online data
     private func setupErrorBinder(){
         homeViewModel.error.binds({[weak self] error in
             if let error = error{

@@ -73,35 +73,43 @@ final class NetworkService{
                 if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                     // Accessing the entire JSON dictionary
                     if let dataArray = json["data"] as? [[String: Any]] {
-                        var gifs: [Gif] = []
-                        for data in dataArray {
-                            var gif = Gif()
-                            if let id = data["id"] as? String{
-                                gif.id = id
-                            }
-                            if let url = data["url"] as? String{
-                                gif.url = url
-                            }
-                            if let image = data["images"] as? [String: Any]{
-                                if let original = image["original"] as? [String: Any]{
-                                    if let url = original["url"] as? String{
-                                        gif.original = url
-                                    }
+                        if dataArray.isEmpty{
+                            completion(false)
+                        }else{
+                            var gifs: [Gif] = []
+                            for data in dataArray {
+                                var gif = Gif()
+                                if let id = data["id"] as? String{
+                                    gif.id = id
                                 }
-                                
-                                if let preview = image["preview_gif"] as? [String: Any]{
-                                    if let url = preview["url"] as? String{
-                                        gif.placeHolder = url
-                                    }
+                                if let url = data["url"] as? String{
+                                    gif.url = url
                                 }
-                                
-                                
+                                if let image = data["images"] as? [String: Any]{
+                                    if let original = image["original"] as? [String: Any]{
+                                        if let url = original["url"] as? String{
+                                            gif.original = url
+                                        }
+                                    }
+                                    
+                                    if let preview = image["preview_gif"] as? [String: Any]{
+                                        if let url = preview["url"] as? String{
+                                            gif.placeHolder = url
+                                        }
+                                    }
+                                    
+                                    
+                                }
+                                gifs.append(gif)
                             }
-                            gifs.append(gif)
+                            result = gifs
+                            completion(true)
                         }
-                        result = gifs
-                        completion(true)
                         
+                        
+                    }else {
+                        // invalid data
+                        completion(false)
                     }
                 } else {
 //                    print("Invalid JSON format")
@@ -121,37 +129,45 @@ final class NetworkService{
                 if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                     // Accessing the entire JSON dictionary
                     if let dataArray = json["results"] as? [[String: Any]] {
-                        var gifs: [Gif] = []
-                        for data in dataArray {
-                            var gif = Gif()
-                            if let id = data["id"] as? String{
-                                gif.id = id
-                            }
-                            if let url = data["url"] as? String{
-                                gif.url = url
-                            }
-                            if let medias = data["media"] as? [[String: Any]]{
-                                for media in medias{
-                                    if let nanoGif = media["nanogif"] as? [String: Any]{
-                                        if let previewUrl = nanoGif["url"] as? String{
-                                            gif.placeHolder = previewUrl
+                        if dataArray.isEmpty{
+                            completion(false)
+                        }else{
+                            var gifs: [Gif] = []
+                            for data in dataArray {
+                                var gif = Gif()
+                                if let id = data["id"] as? String{
+                                    gif.id = id
+                                }
+                                if let url = data["url"] as? String{
+                                    gif.url = url
+                                }
+                                if let medias = data["media"] as? [[String: Any]]{
+                                    for media in medias{
+                                        if let nanoGif = media["nanogif"] as? [String: Any]{
+                                            if let previewUrl = nanoGif["url"] as? String{
+                                                gif.placeHolder = previewUrl
+                                            }
+                                        }
+                                        
+                                        if let gifObjc = media["gif"] as? [String: Any]{
+                                            if let originalUrl = gifObjc["url"] as? String{
+                                                gif.original = originalUrl
+                                            }
                                         }
                                     }
                                     
-                                    if let gifObjc = media["gif"] as? [String: Any]{
-                                        if let originalUrl = gifObjc["url"] as? String{
-                                            gif.original = originalUrl
-                                        }
-                                    }
+                                    
                                 }
-                                
-                                
+                                gifs.append(gif)
                             }
-                            gifs.append(gif)
+                            result = gifs
+                            completion(true)
                         }
-                        result = gifs
-                        completion(true)
                         
+                        
+                    }else {
+                        // invalid data
+                        completion(false)
                     }
                 } else {
 //                    print("Invalid JSON format")
