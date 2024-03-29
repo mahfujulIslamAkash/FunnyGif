@@ -11,7 +11,7 @@ import UIKit
 
 final class NetworkService{
     static var shared = NetworkService()
-    private let providerType: ProviderType = .tenor
+    private let providerType: ProviderType = .gify
     private lazy var basePath: String = providerType == .gify ? "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=25&offset=0&rating=G&lang=en&q=" : "https://g.tenor.com/v1/search?q="
     private let searchText: String = "Trending"
     private var result: [Gif]?

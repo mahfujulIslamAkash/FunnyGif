@@ -19,7 +19,7 @@ class GIFCollectionViewCell: UICollectionViewCell {
         let view = UIImageView()
         view.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
         view.addSubview(indicatorView)
-        indicatorView.anchorView(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+        indicatorView.fillSuperview()
         view.layer.borderWidth = 0.5
         view.layer.cornerRadius = 4
         view.layer.masksToBounds = true
@@ -34,7 +34,7 @@ class GIFCollectionViewCell: UICollectionViewCell {
         // Initialize your cell as usual
         super.init(frame: frame)
         contentView.addSubview(gifView)
-        gifView.anchorView(top: contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor)
+        gifView.fillSuperview()
     }
     
     //MARK: Setup Binders

@@ -117,8 +117,7 @@ class HomeViewController: UIViewController {
     
     //MARK: Search Tap Action
     @objc func searchTapped(){
-        homeViewModel.callApi(customSearchField.textFieldView.text)
-        view.endEditing(true)
+        homeViewModel.SearchAction(customSearchField.textFieldView)
     }
 }
 
@@ -129,10 +128,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GIFCollectionViewCell
-        cell.gifViewModel = homeViewModel.viewModelOfGif(indexPath)
-        cell.setupBinders()
-        return cell
+        return homeViewModel.getCell(collectionView, indexPath)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return homeViewModel.sizeOfCell(collectionView.frame.width)
@@ -147,7 +143,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 //MARK: Text Field Delegate
 extension HomeViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        homeViewModel.callApi(textField.text)
-        return textField.resignFirstResponder()
+        return homeViewModel.SearchAction(customSearchField.textFieldView)
     }
 }

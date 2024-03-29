@@ -8,52 +8,7 @@
 import UIKit
 import Foundation
 
-extension UIView {
- 
-    func addInnerBorder(width: Int){
-        let borderLayer = CAShapeLayer()
-        borderLayer.path = (self.layer.mask! as! CAShapeLayer).path! // Reuse the Bezier path
-        borderLayer.strokeColor = UIColor.red.cgColor
-        borderLayer.fillColor = UIColor.clear.cgColor
-        borderLayer.lineWidth = 5
-        borderLayer.frame = self.bounds
-        self.layer.addSublayer(borderLayer)
-    }
-    
-    func setTransformRotation(toDegrees angleInDegrees: CGFloat) {
-        let angleInRadians = angleInDegrees / 180.0 * CGFloat.pi
-        let rotation = self.transform.rotated(by: angleInRadians)
-        
-        UIView.animate(withDuration: 0.2) {
-            self.transform = rotation
-        }
-    }
-    
-    @discardableResult
-    func applyGradient(colours: [UIColor]) -> CAGradientLayer {
-        return self.applyGradient(colours: colours, locations: nil)
-    }
-    @discardableResult
-    func applyGradient(colours: [UIColor], locations: [NSNumber]?) -> CAGradientLayer {
-        let gradient: CAGradientLayer = CAGradientLayer()
-        gradient.frame = self.bounds
-        gradient.colors = colours.map { $0.cgColor }
-        gradient.locations = locations
-        gradient.startPoint = CGPoint(x: 0, y: 0.5)
-        gradient.endPoint = CGPoint(x: 1, y: 0.5)
-        self.layer.insertSublayer(gradient, at: 0)
-        return gradient
-    }
-//    self.btn.applyGradient(colours: [.yellow, .blue])
-//    self.view.applyGradient(colours: [.yellow, .blue, .red], locations: [0.0, 0.5, 1.0])
-}
-
-
-
-struct AnchoredConstraints {
-    var top, leading, bottom, trailing, width, height: NSLayoutConstraint?
-}
-
+//extension UIView
 extension UIView{
     
     func centerX(withView view: UIView, multiplier: CGFloat, constant: CGFloat) {
@@ -264,26 +219,8 @@ extension UIView{
     }
 }
 
-extension UIView {
 
-    /**
-       Rotate a view by specified degrees
-       parameter angle: angle in degrees
-     */
-
-    func rotate(angle: CGFloat) {
-        let radians = angle / 180.0 * CGFloat.pi
-        let rotation = CGAffineTransformRotate(self.transform, radians);
-        self.transform = rotation
-    }
-    
-    func roundCorners(with CACornerMask: CACornerMask, radius: CGFloat) {
-        self.layer.cornerRadius = radius
-        self.layer.maskedCorners = [CACornerMask]
-    }
-
-}
-
+#warning("test toast view for mine")
 class ToastView: UIView {
     private let messageLabel: UILabel = {
         let label = UILabel()

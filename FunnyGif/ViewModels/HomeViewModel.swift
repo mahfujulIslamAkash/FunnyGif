@@ -33,6 +33,12 @@ class HomeViewModel{
         return CGSize(width: width, height: width)
     }
     
+    func SearchAction(_ textField: UITextField) -> Bool{
+        
+        callApi(textField.text)
+        return textField.resignFirstResponder()
+    }
+    
     func callApi(_ searchedText: String?){
         checkInternet(completion: {[weak self] success in
             if success{
@@ -96,5 +102,11 @@ class HomeViewModel{
             UIView.shared.showingToast("Error")
         }
         
+    }
+    func getCell(_ collectionView: UICollectionView, _ indexPath: IndexPath)->UICollectionViewCell{
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GIFCollectionViewCell
+        cell.gifViewModel = viewModelOfGif(indexPath)
+        cell.setupBinders()
+        return cell
     }
 }
