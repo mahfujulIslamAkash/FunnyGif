@@ -12,7 +12,7 @@ import UIKit
 
 final class NetworkService{
     static var shared = NetworkService()
-    private let providerType: ProviderType = .gify
+    private let providerType: ProviderType = .tenor
     private lazy var baseUrl: String = providerType == .gify ? "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=25&offset=0&rating=G&lang=en&q=" : "https://g.tenor.com/v1/search?q="
     private let searchText: String = "Trending"
     private var result: [Gif]?
@@ -47,7 +47,6 @@ final class NetworkService{
         let urlSession = URLSession.shared.dataTask(with: ulrRequest, completionHandler: { [weak self] data, response, error in
             
             if let error = error{
-                print("appError: ", error)
                 completion(false)
             }else{
                 if self?.providerType == .gify{
@@ -106,11 +105,11 @@ final class NetworkService{
                         
                     }
                 } else {
-                    print("Invalid JSON format")
+//                    print("Invalid JSON format")
                     completion(false)
                 }
             } catch {
-                print("Error parsing JSON: \(error)")
+//                print("Error parsing JSON: \(error)")
                 completion(false)
             }
         }
@@ -156,11 +155,11 @@ final class NetworkService{
                         
                     }
                 } else {
-                    print("Invalid JSON format")
+//                    print("Invalid JSON format")
                     completion(false)
                 }
             } catch {
-                print("Error parsing JSON: \(error)")
+//                print("Error parsing JSON: \(error)")
                 completion(false)
             }
         }
@@ -184,8 +183,9 @@ final class NetworkService{
     func gettingDataOf(_ dataPath: String, completion: @escaping(Data?)->Void){
         if let url = URL(string: dataPath){
             URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
-                if let error = error{
-                    print(error)
+                if let _ = error{
+                    completion(nil)
+//                    print(error)
                 }else{
                     if let data = data{
                         completion(data)
@@ -202,8 +202,9 @@ final class NetworkService{
     
     func gettingDataOf(_ dataUrl: URL, completion: @escaping(Data?)->Void){
         URLSession.shared.dataTask(with: dataUrl, completionHandler: {data, response, error in
-            if let error = error{
-                print(error)
+            if let _ = error{
+//                print(error)
+                completion(nil)
             }else{
                 if let data = data{
                     completion(data)
@@ -214,6 +215,24 @@ final class NetworkService{
             }
         }).resume()
     }
+    
+    static func checkConnectivity(completion: @escaping (Bool) -> Void) {
+            guard let url = URL(string: "https://www.apple.com") else {
+                completion(false) // Invalid URL
+                return
+            }
+            
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                if let error = error as NSError?, error.domain == NSURLErrorDomain {
+                    // Error occurred, indicating no internet connection
+                    completion(false)
+                } else {
+                    // No error, internet connection is available
+                    completion(true)
+                }
+            }
+            task.resume()
+        }
      
 }
 

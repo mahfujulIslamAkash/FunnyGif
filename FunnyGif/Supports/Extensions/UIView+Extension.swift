@@ -287,7 +287,7 @@ extension UIView {
 class ToastView: UIView {
     private let messageLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .white
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
@@ -304,7 +304,7 @@ class ToastView: UIView {
     }
     
     private func configureUI() {
-        backgroundColor = UIColor.white.withAlphaComponent(0.7)
+        backgroundColor = UIColor(hexString: "FF2DAF")
         layer.cornerRadius = 10
         addSubview(messageLabel)
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -349,8 +349,8 @@ extension UIView{
     static var shared = UIView()
     
 #warning("for my test, please ignore this warning")
-    func showingToast(){
-        let toast = ToastView(message: "Successfully Copied Url")
+    func showingToast(_ message: String = "Successfully Copied Url"){
+        let toast = ToastView(message: message)
         if let window = UIApplication.shared.windows.first {
             if let currentView = window.rootViewController?.view{
                 DispatchQueue.main.async {

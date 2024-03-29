@@ -68,7 +68,8 @@ class HomeViewController: UIViewController {
     private func setupBinders(){
         setupLoadedBinder()
         setupIsLoadingBinder()
-        homeViewModel.callApi()
+        setupErrorBinder()
+        homeViewModel.callApi(nil)
     }
     
     private func setupLoadedBinder(){
@@ -88,6 +89,16 @@ class HomeViewController: UIViewController {
             self?.loadingAnimation(isLoading)
         })
     }
+    
+    private func setupErrorBinder(){
+        homeViewModel.error.binds({[weak self] error in
+            if let error = error{
+                //error handle
+                self?.homeViewModel.showingErrorToast()
+            }
+        })
+    }
+    
     
     //MARK: Loading View
     private func loadingAnimation(_ isLoading: Bool){
