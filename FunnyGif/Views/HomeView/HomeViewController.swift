@@ -117,7 +117,7 @@ class HomeViewController: UIViewController {
     
     //MARK: Search Tap Action
     @objc func searchTapped(){
-        homeViewModel.SearchAction(customSearchField.textFieldView)
+        let _ = homeViewModel.SearchAction(customSearchField.textFieldView)
     }
 }
 
