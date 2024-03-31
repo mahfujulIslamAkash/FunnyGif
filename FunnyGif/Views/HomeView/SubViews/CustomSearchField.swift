@@ -2,20 +2,12 @@
 //  CustomSearchField.swift
 //  FunnyGif
 //
-//  Created by Appnap Mahfuj on 27/3/24.
-//
+
 
 import UIKit
 
 class CustomSearchField: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+    
     var searchText: String?
     lazy var statckView: UIStackView = {
         let stack = UIStackView()
@@ -56,7 +48,10 @@ class CustomSearchField: UIView {
     
     lazy var textFieldView: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Search Gif"
+        textField.attributedPlaceholder  = NSAttributedString(
+            string: "Search Gif",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.3)]
+        )
         textField.textColor = .black.withAlphaComponent(0.5)
         return textField
     }()

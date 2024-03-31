@@ -2,7 +2,6 @@
 //  FunnyGifUITests.swift
 //  FunnyGifUITests
 //
-//  Created by Appnap Mahfuj on 27/3/24.
 //
 
 import XCTest

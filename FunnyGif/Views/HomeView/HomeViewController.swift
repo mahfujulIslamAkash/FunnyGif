@@ -2,7 +2,6 @@
 //  ViewController.swift
 //  FunnyGif
 //
-//  Created by Appnap Mahfuj on 27/3/24.
 //
 
 import UIKit
@@ -10,18 +9,18 @@ import UIKit
 class HomeViewController: UIViewController {
     
     //MARK: UI Component
-    lazy var searchField: CustomSearchField = {
+    lazy var customSearchField: CustomSearchField = {
         let field = CustomSearchField(motherSize: CGSize(width: view.frame.width, height: 65))
         field.textFieldView.delegate = self
         field.seachButton.addTarget(self, action: #selector(searchTapped), for: .touchDown)
         return field
     }()
     
-    lazy var gifCollection: UICollectionView = {
+    lazy var GIFCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.register(GifCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        view.register(GIFCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         view.delegate = self
         view.dataSource = self
         view.backgroundColor = .black
@@ -46,54 +45,57 @@ class HomeViewController: UIViewController {
         stack.axis = .vertical
         stack.alignment = .fill
         stack.spacing = 15
-        stack.addArrangedSubview(searchField)
-        stack.addArrangedSubview(gifCollection)
+        stack.addArrangedSubview(customSearchField)
+        stack.addArrangedSubview(GIFCollection)
         stack.layer.borderWidth = 0.5
         return stack
     }()
     
     //MARK: View Model
-    let homeViewModel = HomeViewModel()
+    let homeViewModel = HomeViewModel(nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.addSubview(stackView)
         stackView.anchorView(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, paddingTop: 60)
-        setupBinders()
+        setupObservers()
         
     }
     
     //MARK: Setup Binders
-    private func setupBinders(){
-        setupLoadedBinder()
-        setupIsLoadingBinder()
-        setupErrorBinder()
-        homeViewModel.callApi(nil)
+    private func setupObservers(){
+        setupLoadedObserver()
+        setupIsLoadingObserver()
+        setupErrorObserver()
     }
     
-    private func setupLoadedBinder(){
+    //This binder will trigger after fetching online data
+    private func setupLoadedObserver(){
         homeViewModel.isLoaded.binds({[weak self] success in
             if let _ = success{
                 //reload view
                 //here we will reload collectionView
                 DispatchQueue.main.async {
-                    self?.gifCollection.reloadData()
+                    self?.GIFCollection.reloadData()
                 }
             }
         })
     }
     
-    private func setupIsLoadingBinder(){
+    //This binder will trigger when loading need to change its state
+    private func setupIsLoadingObserver(){
         homeViewModel.isLoading.binds({[weak self] isLoading in
             self?.loadingAnimation(isLoading)
         })
     }
     
-    private func setupErrorBinder(){
+    //This binder will trigger after fetching online data
+    private func setupErrorObserver(){
         homeViewModel.error.binds({[weak self] error in
-            if let error = error{
+            if let _ = error{
                 //error handle
+                self?.loadingAnimation(false)
                 self?.homeViewModel.showingErrorToast()
             }
         })
@@ -115,8 +117,7 @@ class HomeViewController: UIViewController {
     
     //MARK: Search Tap Action
     @objc func searchTapped(){
-        homeViewModel.callApi(searchField.textFieldView.text)
-        view.endEditing(true)
+        let _ = homeViewModel.SearchAction(customSearchField.textFieldView)
     }
 }
 
@@ -127,10 +128,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GifCollectionViewCell
-        cell.gifViewModel = homeViewModel.viewModelOfGif(indexPath)
-        cell.setupBinders()
-        return cell
+        return homeViewModel.getCell(collectionView, indexPath)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return homeViewModel.sizeOfCell(collectionView.frame.width)
@@ -145,7 +143,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 //MARK: Text Field Delegate
 extension HomeViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        homeViewModel.callApi(textField.text)
-        return textField.resignFirstResponder()
+        return homeViewModel.SearchAction(customSearchField.textFieldView)
     }
 }

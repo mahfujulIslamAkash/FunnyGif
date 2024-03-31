@@ -2,7 +2,6 @@
 //  HomeViewModel.swift
 //  FunnyGif
 //
-//  Created by Appnap Mahfuj on 27/3/24.
 //
 
 import Foundation
@@ -10,15 +9,16 @@ import UIKit
 
 class HomeViewModel{
     
-    init(){
-        
+    static var shared = NetworkService()
+    init(_ searchText: String?){
+        callApi(searchText)
     }
     var isLoaded: ObservableObject<Bool?> = ObservableObject(nil)
     var isLoading: ObservableObject<Bool> = ObservableObject(true)
     var error: ObservableObject<Bool?> = ObservableObject(nil)
     
     func countOfGifsResult() -> Int{
-        guard let gifs = NetworkService.shared.getGifResults() else{
+        guard let gifs = HomeViewModel.shared.getGifResults() else{
             return 0
         }
         return gifs.count
@@ -33,20 +33,11 @@ class HomeViewModel{
         return CGSize(width: width, height: width)
     }
     
-//    func callApi(_ searchedText: String?){
-//        isLoading.value = true
-//        NetworkService.shared.getTrendingGifs(completion: {[weak self] success in
-//            if success{
-//                self?.isLoaded.value = success
-//                self?.isLoading.value = false
-//            }else{
-//                self?.error.value = true
-//                self?.isLoading.value = false
-//            }
-//            
-//            
-//        })
-//    }
+    func SearchAction(_ textField: UITextField) -> Bool{
+        
+        callApi(textField.text)
+        return textField.resignFirstResponder()
+    }
     
     func callApi(_ searchedText: String?){
         checkInternet(completion: {[weak self] success in
@@ -58,7 +49,7 @@ class HomeViewModel{
     
     private func fetchingData(_ searchedText: String?){
         isLoading.value = true
-        NetworkService.shared.getSearchedGifs(searchedText, completion: {[weak self] success in
+        HomeViewModel.shared.getSearchedGifs(searchedText, completion: {[weak self] success in
             if success{
                 self?.isLoaded.value = success
                 self?.isLoading.value = false
@@ -70,7 +61,7 @@ class HomeViewModel{
     }
     
     private func checkInternet(completion: @escaping(Bool)->Void){
-        NetworkService.checkConnectivity(completion: {[weak self] havingInternet in
+        HomeViewModel.shared.checkConnectivity(completion: {[weak self] havingInternet in
             if havingInternet{
                 completion(true)
             }else{
@@ -80,7 +71,7 @@ class HomeViewModel{
     }
     
     private func getPreviewGifPath(_ indexPath: IndexPath) -> String{
-        guard let gifs = NetworkService.shared.getGifResults() else{
+        guard let gifs = HomeViewModel.shared.getGifResults() else{
             return ""
         }
         guard let path = gifs[indexPath.row].placeHolder else { return "" }
@@ -88,18 +79,19 @@ class HomeViewModel{
     }
     
     private func getOriginalGifPath(_ indexPath: IndexPath) -> String{
-        guard let gifs = NetworkService.shared.getGifResults() else{
+        guard let gifs = HomeViewModel.shared.getGifResults() else{
             return ""
         }
         guard let path = gifs[indexPath.row].original else { return "" }
         return path
     }
     
-    func viewModelOfGif(_ indexPath: IndexPath) -> GifViewModel{
+    func viewModelOfGif(_ indexPath: IndexPath) -> GIFViewModel{
         let path = getPreviewGifPath(indexPath)
-        return GifViewModel(path: path)
+        return GIFViewModel(path: path)
     }
     
+    //MARK: testing purpose for mine
     func copyToClipboard(_ indexPath: IndexPath) {
         let path = getOriginalGifPath(indexPath)
         UIView.shared.copyToClipboard(path)
@@ -110,5 +102,11 @@ class HomeViewModel{
             UIView.shared.showingToast("Error")
         }
         
+    }
+    func getCell(_ collectionView: UICollectionView, _ indexPath: IndexPath)->UICollectionViewCell{
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GIFCollectionViewCell
+        cell.gifViewModel = viewModelOfGif(indexPath)
+        cell.setupBinders()
+        return cell
     }
 }
