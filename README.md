@@ -4,7 +4,7 @@ This iOS Gif Search App allows users to search for and view GIF images from vari
 ## Features
 **Search Functionality:** Users can search for GIFs using keywords.\
 **GIF Viewing:** Users can view GIFs in a collection view.\
-**Error Handling:** Provides error handling for network issues and invalid responses.\
+**Error Handling:** Provides error handling for network issues and invalid responses.
 ## Installation
 To install the app, follow these steps:
 
