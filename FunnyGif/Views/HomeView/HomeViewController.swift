@@ -134,7 +134,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return homeViewModel.sizeOfCell(collectionView.frame.width)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        homeViewModel.copyToClipboard(indexPath)
+//        homeViewModel.copyToClipboard(indexPath)
     }
     
     
