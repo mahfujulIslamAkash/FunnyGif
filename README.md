@@ -10,7 +10,15 @@ To install the app, follow these steps:
 
 1. Clone the repository to your local machine.
 2. Open the project in Xcode.
-3. Build and run the app on a simulator or a physical device.
+3.
+```swift
+final class NetworkService{
+    static var shared = NetworkService()
+    private let providerType: ProviderType = .gify
+}
+```
+You Can change **providerType** .gify -> .tenor, for diff provider.\
+4. Build and run the app on a simulator or a physical device.
 ## Usage
 1. Upon launching the app, you'll be presented with a search bar.
 2. Enter a keyword in the search bar and tap the search button to fetch GIFs related to the keyword.
@@ -27,8 +35,6 @@ Contributions to the project are welcome! If you'd like to contribute, please fo
 1. Create a new branch for your feature or bug fix.
 2. Make your changes and ensure that the code passes all tests.
 3. Submit a pull request with a clear description of your changes.
-## License
-This project is licensed under the MIT License.
 
 ## Contact
 For any questions or inquiries, please contact **mahfujulislam2014@gmail.com**.
