@@ -26,9 +26,6 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .black
         view.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         view.showsVerticalScrollIndicator = false
-//        view.addSubview(indicatorView)
-//        indicatorView.centerX(inView: view)
-//        indicatorView.centerY(inView: view)
         return view
         
     }()
