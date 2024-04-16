@@ -220,7 +220,7 @@ extension UIView{
 }
 
 
-#warning("test toast view for mine")
+//#warning("test toast view for mine")
 class ToastView: UIView {
     private let messageLabel: UILabel = {
         let label = UILabel()
@@ -285,7 +285,7 @@ class ToastView: UIView {
 extension UIView{
     static var shared = UIView()
     
-#warning("for my test, please ignore this warning")
+//#warning("for my test, please ignore this warning")
     func showingToast(_ message: String = "Successfully Copied Url"){
         let toast = ToastView(message: message)
         if let window = UIApplication.shared.windows.first {

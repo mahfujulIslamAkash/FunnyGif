@@ -26,9 +26,9 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .black
         view.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         view.showsVerticalScrollIndicator = false
-        view.addSubview(indicatorView)
-        indicatorView.centerX(inView: view)
-        indicatorView.centerY(inView: view)
+//        view.addSubview(indicatorView)
+//        indicatorView.centerX(inView: view)
+//        indicatorView.centerY(inView: view)
         return view
         
     }()
@@ -48,6 +48,9 @@ class HomeViewController: UIViewController {
         stack.addArrangedSubview(customSearchField)
         stack.addArrangedSubview(GIFCollection)
         stack.layer.borderWidth = 0.5
+        stack.addSubview(indicatorView)
+        indicatorView.centerX(inView: stack)
+        indicatorView.centerY(inView: stack)
         return stack
     }()
     
@@ -106,10 +109,12 @@ class HomeViewController: UIViewController {
     private func loadingAnimation(_ isLoading: Bool){
         if isLoading{
             DispatchQueue.main.async {[weak self] in
+                self?.GIFCollection.layer.opacity = 0
                 self?.indicatorView.startAnimating()
             }
         }else{
             DispatchQueue.main.async {[weak self] in
+                self?.GIFCollection.layer.opacity = 1
                 self?.indicatorView.stopAnimating()
             }
         }

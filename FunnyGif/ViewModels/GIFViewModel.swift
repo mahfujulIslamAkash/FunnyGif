@@ -62,4 +62,11 @@ final class GIFViewModel{
             return nil
         }
     }
+    func getPlaceholder() -> UIImage{
+        if let image = self.image{
+            return image
+        }else{
+            return UIImage()
+        }
+    }
 }

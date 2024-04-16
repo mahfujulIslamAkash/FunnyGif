@@ -72,6 +72,7 @@ class GIFCollectionViewCell: UICollectionViewCell {
     private func loadingAnimation(_ isLoading: Bool){
         if isLoading{
             DispatchQueue.main.async {[weak self] in
+                self?.gifView.image = self?.gifViewModel.getPlaceholder()
                 self?.indicatorView.startAnimating()
             }
         }else{

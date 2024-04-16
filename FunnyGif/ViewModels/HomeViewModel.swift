@@ -34,9 +34,12 @@ class HomeViewModel{
     }
     
     func SearchAction(_ textField: UITextField) -> Bool{
-        
-        callApi(textField.text)
+        if textField.text != "" {
+            callApi(textField.text)
+        }
         return textField.resignFirstResponder()
+//        callApi(textField.text)
+//        return textField.resignFirstResponder()
     }
     
     func callApi(_ searchedText: String?){
