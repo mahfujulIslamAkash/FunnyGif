@@ -17,7 +17,7 @@ final class NetworkService{
     private let searchText: String = "Trending"
     private var result: [Gif]?
     private var currentOffset: Int = 0
-    private var limit: Int = 20
+    private var limit: Int = 30
     func goToNextPage(){
         self.currentOffset += limit
         
@@ -121,7 +121,7 @@ final class NetworkService{
                                 }
                                 gifs.append(gif)
                             }
-                            if let result = result{
+                            if let _ = result{
                                 self.result!.append(contentsOf: gifs)
                             }else{
                                 result = gifs
@@ -185,7 +185,7 @@ final class NetworkService{
                                 }
                                 gifs.append(gif)
                             }
-                            if let result = result{
+                            if let _ = result{
                                 self.result!.append(contentsOf: gifs)
                             }else{
                                 result = gifs
@@ -220,6 +220,9 @@ final class NetworkService{
     //This func will be called by the VM
     func getGifResults()->[Gif]?{
         return result
+    }
+    func clearResult(){
+        result = []
     }
     
     //This function fetch the data from URL_path

@@ -52,6 +52,9 @@ class HomeViewModel{
     
     private func fetchingData(_ searchedText: String?){
         isLoading.value = true
+        if searchedText != lastSearch{
+            HomeViewModel.shared.clearResult()
+        }
         lastSearch = searchedText ?? "Trending"
         HomeViewModel.shared.getSearchedGifs(searchedText, completion: {[weak self] success in
             if success{
