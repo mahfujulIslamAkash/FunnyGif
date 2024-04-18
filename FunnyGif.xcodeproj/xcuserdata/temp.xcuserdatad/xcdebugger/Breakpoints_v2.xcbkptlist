@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "358EBF72-05D7-4310-AE36-86948A2B6037"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D7B059B0-D7CA-4FC0-84CE-663DEB7CE061"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FunnyGif/Services/NetworkService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "getResponse(_:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D7B059B0-D7CA-4FC0-84CE-663DEB7CE061 - c129b00409d2473f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FunnyGif.NetworkService.getResponse(_: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "FunnyGif"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/temp/Documents/GitHub/FunnyGif/FunnyGif/Services/NetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "62"
+                  endingLineNumber = "62"
+                  offsetFromSymbolStart = "1532">
+               </Location>
+               <Location
+                  uuid = "D7B059B0-D7CA-4FC0-84CE-663DEB7CE061 - c129b00409d240de"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FunnyGif.NetworkService.getResponse(_: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "FunnyGif"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/temp/Documents/GitHub/FunnyGif/FunnyGif/Services/NetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63"
+                  offsetFromSymbolStart = "484">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "67B201C0-341B-4941-904B-13584D863AF0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FunnyGif/ViewModels/HomeViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "searchForNextOffset()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E64E7F7F-21D6-4619-8DDF-9C70D97DB965"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FunnyGif/Services/NetworkService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "goToNextPage()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E64E7F7F-21D6-4619-8DDF-9C70D97DB965 - 2a6e208f63db01bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FunnyGif.NetworkService.goToNextPage() -&gt; ()"
+                  moduleName = "FunnyGif"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/temp/Documents/GitHub/FunnyGif/FunnyGif/Services/NetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "172">
+               </Location>
+               <Location
+                  uuid = "E64E7F7F-21D6-4619-8DDF-9C70D97DB965 - 2a6e208f63db01bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FunnyGif.NetworkService.goToNextPage() -&gt; ()"
+                  moduleName = "FunnyGif"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/temp/Documents/GitHub/FunnyGif/FunnyGif/Services/NetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "164">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "33D0B3E0-A819-4293-BC30-0F1870C7DC53"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FunnyGif/Views/HomeView/HomeViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
+            landmarkName = "collectionView(_:numberOfItemsInSection:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

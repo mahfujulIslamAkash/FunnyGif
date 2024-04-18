@@ -11,37 +11,55 @@ import UIKit
 
 final class NetworkService{
     static var shared = NetworkService()
-    private let providerType: ProviderType = .tenor
-    private lazy var basePath: String = providerType == .gify ? "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=25&offset=0&rating=G&lang=en&q=" : "https://g.tenor.com/v1/search?q="
+    private let providerType: ProviderType = .gify
+    private lazy var basePath: String = providerType == .gify ? "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=2&offset=1&rating=G&lang=en&q=" : "https://g.tenor.com/v1/search?q="
+    
     private let searchText: String = "Trending"
     private var result: [Gif]?
-    
-    
-    private func getPath(_ searchText: String?) -> String{
-        if let text = searchText{
-            if providerType == .gify{
-                return basePath+text
-            }else{
-                return basePath+text+"&key=LIVDSRZULELA"
-            }
-            
-        }
-        else{
-            //Default path
-            if providerType == .gify{
-                return basePath+self.searchText
-            }else{
-                return basePath+self.searchText+"&key=LIVDSRZULELA"
-            }
-            
-        }
+    private var currentOffset: Int = 0
+    private var limit: Int = 20
+    func goToNextPage(){
+        self.currentOffset += limit
+        
     }
+    
+    private func getBasePathByOffset(_ searchText: String?) -> String{
+        let offset = currentOffset
+        guard let text = searchText else{
+            let path = "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=\(limit)&offset=\(offset)&rating=G&lang=en&q=" + self.searchText
+            return path
+        }
+        let path = "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=\(limit)&offset=\(offset)&rating=G&lang=en&q=" + text
+        return path
+    }
+    
+    
+//    private func getPath(_ searchText: String?) -> String{
+//        if let text = searchText{
+//            if providerType == .gify{
+//                return basePath+text
+//            }else{
+//                return basePath+text+"&key=LIVDSRZULELA"
+//            }
+//            
+//        }
+//        else{
+//            //Default path
+//            if providerType == .gify{
+//                return basePath+self.searchText
+//            }else{
+//                return basePath+self.searchText+"&key=LIVDSRZULELA"
+//            }
+//            
+//        }
+//    }
     
     //MARK: Respose for gify, tenor
     private func getResponse(_ searchFor: String?, completion: @escaping(_ success: Bool)-> Void){
-        guard let url = URL(string: getPath(searchFor)) else{
+        guard let url = URL(string: getBasePathByOffset(searchFor)) else {
             return
         }
+        
         let ulrRequest = URLRequest(url: url)
         let urlSession = URLSession.shared.dataTask(with: ulrRequest, completionHandler: { [weak self] data, response, error in
             
@@ -103,7 +121,12 @@ final class NetworkService{
                                 }
                                 gifs.append(gif)
                             }
-                            result = gifs
+                            if let result = result{
+                                self.result!.append(contentsOf: gifs)
+                            }else{
+                                result = gifs
+                            }
+                            
                             completion(true)
                         }
                         
@@ -162,7 +185,12 @@ final class NetworkService{
                                 }
                                 gifs.append(gif)
                             }
-                            result = gifs
+                            if let result = result{
+                                self.result!.append(contentsOf: gifs)
+                            }else{
+                                result = gifs
+                            }
+                            
                             completion(true)
                         }
                         

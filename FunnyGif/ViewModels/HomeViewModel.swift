@@ -16,7 +16,7 @@ class HomeViewModel{
     var isLoaded: ObservableObject<Bool?> = ObservableObject(nil)
     var isLoading: ObservableObject<Bool> = ObservableObject(true)
     var error: ObservableObject<Bool?> = ObservableObject(nil)
-    
+    private var lastSearch: String = "Trending"
     func countOfGifsResult() -> Int{
         guard let gifs = HomeViewModel.shared.getGifResults() else{
             return 0
@@ -52,6 +52,7 @@ class HomeViewModel{
     
     private func fetchingData(_ searchedText: String?){
         isLoading.value = true
+        lastSearch = searchedText ?? "Trending"
         HomeViewModel.shared.getSearchedGifs(searchedText, completion: {[weak self] success in
             if success{
                 self?.isLoaded.value = success
@@ -111,5 +112,26 @@ class HomeViewModel{
         cell.gifViewModel = viewModelOfGif(indexPath)
         cell.setupBinders()
         return cell
+    }
+    
+    func isThisLastCell(indexPath: IndexPath) -> Bool{
+        if indexPath.row == countOfGifsResult()-1{
+            return true
+        }else{
+            return false
+        }
+    }
+    func searchForNextOffset(){
+        HomeViewModel.shared.goToNextPage()
+        isLoading.value = true
+        HomeViewModel.shared.getSearchedGifs(self.lastSearch, completion: {[weak self] success in
+            if success{
+                self?.isLoaded.value = success
+                self?.isLoading.value = false
+            }else{
+                self?.error.value = true
+                self?.isLoading.value = false
+            }
+        })
     }
 }

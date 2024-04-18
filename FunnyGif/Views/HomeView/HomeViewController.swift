@@ -138,6 +138,15 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        homeViewModel.copyToClipboard(indexPath)
     }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if homeViewModel.isThisLastCell(indexPath: indexPath){
+            //need to call new offset data
+            homeViewModel.searchForNextOffset()
+        }else{
+            //ignore
+        }
+    }
+    
     
     
 }
