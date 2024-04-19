@@ -8,7 +8,9 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    //MARK: UI Component
+    // MARK: - UI Components
+    
+    /// Custom search field for user input
     lazy var customSearchField: CustomSearchField = {
         let field = CustomSearchField(motherSize: CGSize(width: view.frame.width, height: 65))
         field.textFieldView.delegate = self
@@ -16,6 +18,7 @@ class HomeViewController: UIViewController {
         return field
     }()
     
+    /// Collection view to display GIFs
     lazy var GIFCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -27,8 +30,9 @@ class HomeViewController: UIViewController {
         view.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         view.showsVerticalScrollIndicator = false
         return view
-        
     }()
+    
+    /// Activity indicator to show loading state
     let indicatorView: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView()
         view.hidesWhenStopped = true
@@ -37,6 +41,7 @@ class HomeViewController: UIViewController {
         return view
     }()
     
+    /// Stack view to organize UI components
     lazy var stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -51,8 +56,11 @@ class HomeViewController: UIViewController {
         return stack
     }()
     
-    //MARK: View Model
+    // MARK: - View Model
+    
     let homeViewModel = HomeViewModel(nil)
+    
+    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,22 +68,21 @@ class HomeViewController: UIViewController {
         view.addSubview(stackView)
         stackView.anchorView(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, paddingTop: 60)
         setupObservers()
-        
     }
     
-    //MARK: Setup Binders
-    private func setupObservers(){
+    // MARK: - Setup Binders
+    
+    /// Set up observers for view model properties
+    private func setupObservers() {
         setupLoadedObserver()
         setupIsLoadingObserver()
         setupErrorObserver()
     }
     
-    //This binder will trigger after fetching online data
-    private func setupLoadedObserver(){
+    /// Set up observer for data loaded state
+    private func setupLoadedObserver() {
         homeViewModel.isLoaded.binds({[weak self] success in
-            if let _ = success{
-                //reload view
-                //here we will reload collectionView
+            if let _ = success {
                 DispatchQueue.main.async {
                     self?.GIFCollection.reloadData()
                 }
@@ -83,33 +90,33 @@ class HomeViewController: UIViewController {
         })
     }
     
-    //This binder will trigger when loading need to change its state
-    private func setupIsLoadingObserver(){
+    /// Set up observer for loading state
+    private func setupIsLoadingObserver() {
         homeViewModel.isLoading.binds({[weak self] isLoading in
             self?.loadingAnimation(isLoading)
         })
     }
     
-    //This binder will trigger after fetching online data
-    private func setupErrorObserver(){
+    /// Set up observer for error state
+    private func setupErrorObserver() {
         homeViewModel.error.binds({[weak self] error in
-            if let _ = error{
-                //error handle
+            if let _ = error {
                 self?.loadingAnimation(false)
                 self?.homeViewModel.showingErrorToast()
             }
         })
     }
     
+    // MARK: - Loading View
     
-    //MARK: Loading View
-    private func loadingAnimation(_ isLoading: Bool){
-        if isLoading{
+    /// Handle loading animation
+    private func loadingAnimation(_ isLoading: Bool) {
+        if isLoading {
             DispatchQueue.main.async {[weak self] in
                 self?.GIFCollection.layer.opacity = 0
                 self?.indicatorView.startAnimating()
             }
-        }else{
+        } else {
             DispatchQueue.main.async {[weak self] in
                 self?.GIFCollection.layer.opacity = 1
                 self?.indicatorView.stopAnimating()
@@ -117,11 +124,14 @@ class HomeViewController: UIViewController {
         }
     }
     
-    //MARK: Search Tap Action
-    @objc func searchTapped(){
+    // MARK: - Search Tap Action
+    
+    /// Action when search button is tapped
+    @objc func searchTapped() {
         let _ = homeViewModel.SearchAction(customSearchField.textFieldView)
     }
 }
+
 
 //MARK: CollectionView Delegate
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
