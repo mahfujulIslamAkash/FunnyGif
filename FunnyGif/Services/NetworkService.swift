@@ -15,7 +15,7 @@ final class NetworkService{
     private lazy var basePath: String = providerType == .gify ? "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=2&offset=1&rating=G&lang=en&q=" : "https://g.tenor.com/v1/search?q="
     
     private let searchText: String = "Trending"
-    private var result: [Gif]?
+
     private var currentOffset: Int = 0
     private var limit: Int = 30
     func goToNextPage(){
@@ -24,12 +24,11 @@ final class NetworkService{
     }
     
     private func getBasePathByOffset(_ searchText: String?) -> String{
-        let offset = currentOffset
         guard let text = searchText else{
-            let path = "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=\(limit)&offset=\(offset)&rating=G&lang=en&q=" + self.searchText
+            let path = "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=\(limit)&offset=\(currentOffset)&rating=G&lang=en&q=" + self.searchText
             return path
         }
-        let path = "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=\(limit)&offset=\(offset)&rating=G&lang=en&q=" + text
+        let path = "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=\(limit)&offset=\(currentOffset)&rating=G&lang=en&q=" + text
         return path
     }
     
@@ -55,7 +54,7 @@ final class NetworkService{
 //    }
     
     //MARK: Respose for gify, tenor
-    private func getResponse(_ searchFor: String?, completion: @escaping(_ success: Bool)-> Void){
+    private func getResponse(_ searchFor: String?, _ limit: Int = 30, _ offset: Int = 0, completion: @escaping(_ success: Bool, [Gif]?)-> Void){
         guard let url = URL(string: getBasePathByOffset(searchFor)) else {
             return
         }
@@ -64,15 +63,15 @@ final class NetworkService{
         let urlSession = URLSession.shared.dataTask(with: ulrRequest, completionHandler: { [weak self] data, response, error in
             
             if let _ = error{
-                completion(false)
+                completion(false, nil)
             }else{
                 if self?.providerType == .gify{
-                    self?.parsingForGify(data: data, completion: {result in
-                        completion(result)
+                    self?.parsingForGify(data: data, completion: {success, result in
+                        completion(success, result)
                     })
                 }else{
-                    self?.parsingForTenor(data: data, completion: {result in
-                        completion(result)
+                    self?.parsingForTenor(data: data, completion: {success, result in
+                        completion(success, result)
                     })
                 }
             }
@@ -85,7 +84,7 @@ final class NetworkService{
     }
     
     //MARK: Gify Data fetch using JSONSerialization
-    private func parsingForGify(data: Data?, completion: @escaping(_ success: Bool)-> Void){
+    private func parsingForGify(data: Data?, completion: @escaping(_ success: Bool, [Gif]?)-> Void){
         if let data = data{
             do {
                 // Deserialize JSON data
@@ -93,7 +92,7 @@ final class NetworkService{
                     // Accessing the entire JSON dictionary
                     if let dataArray = json["data"] as? [[String: Any]] {
                         if dataArray.isEmpty{
-                            completion(false)
+                            completion(false, nil)
                         }else{
                             var gifs: [Gif] = []
                             for data in dataArray {
@@ -121,33 +120,28 @@ final class NetworkService{
                                 }
                                 gifs.append(gif)
                             }
-                            if let _ = result{
-                                self.result!.append(contentsOf: gifs)
-                            }else{
-                                result = gifs
-                            }
                             
-                            completion(true)
+                            completion(true, gifs)
                         }
                         
                         
                     }else {
                         //invalid data
-                        completion(false)
+                        completion(false, nil)
                     }
                 } else {
                     //print("Invalid JSON format")
-                    completion(false)
+                    completion(false, nil)
                 }
             } catch {
                 //print("Error parsing JSON: \(error)")
-                completion(false)
+                completion(false, nil)
             }
         }
     }
     
     //MARK: Tenor Data fetch using JSONSerialization
-    private func parsingForTenor(data: Data?, completion: @escaping(_ success: Bool)-> Void){
+    private func parsingForTenor(data: Data?, completion: @escaping(_ success: Bool, [Gif]?)-> Void){
         if let data = data{
             do {
                 // Deserialize JSON data
@@ -155,7 +149,7 @@ final class NetworkService{
                     // Accessing the entire JSON dictionary
                     if let dataArray = json["results"] as? [[String: Any]] {
                         if dataArray.isEmpty{
-                            completion(false)
+                            completion(false, nil)
                         }else{
                             var gifs: [Gif] = []
                             for data in dataArray {
@@ -185,45 +179,40 @@ final class NetworkService{
                                 }
                                 gifs.append(gif)
                             }
-                            if let _ = result{
-                                self.result!.append(contentsOf: gifs)
-                            }else{
-                                result = gifs
-                            }
                             
-                            completion(true)
+                            completion(true, gifs)
                         }
                         
                         
                     }else {
                         //invalid data
-                        completion(false)
+                        completion(false, nil)
                     }
                 } else {
                     //print("Invalid JSON format")
-                    completion(false)
+                    completion(false, nil)
                 }
             } catch {
                 //print("Error parsing JSON: \(error)")
-                completion(false)
+                completion(false, nil)
             }
         }
     }
     
     //This func will be called by the VM
-    func getSearchedGifs(_ searchFor: String?, completion: @escaping(_ success: Bool)-> Void){
-        getResponse(searchFor, completion: {success in
-            completion(success)
+    func getSearchedGifs(_ searchFor: String?, completion: @escaping(_ success: Bool, [Gif]?)-> Void){
+        getResponse(searchFor, completion: {success, result in
+            completion(success, result)
         })
     }
     
     //This func will be called by the VM
-    func getGifResults()->[Gif]?{
-        return result
-    }
-    func clearResult(){
-        result = []
-    }
+//    func getGifResults()->[Gif]?{
+//        return result
+//    }
+//    func clearResult(){
+//        result = []
+//    }
     
     //This function fetch the data from URL_path
     //Using for fetching gif file data

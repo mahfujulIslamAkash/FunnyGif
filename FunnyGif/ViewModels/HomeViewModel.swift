@@ -16,9 +16,12 @@ class HomeViewModel{
     var isLoaded: ObservableObject<Bool?> = ObservableObject(nil)
     var isLoading: ObservableObject<Bool> = ObservableObject(true)
     var error: ObservableObject<Bool?> = ObservableObject(nil)
+    // Array to hold the search results
+    private var results: [Gif]?
+    
     private var lastSearch: String = "Trending"
     func countOfGifsResult() -> Int{
-        guard let gifs = HomeViewModel.shared.getGifResults() else{
+        guard let gifs = results else{
             return 0
         }
         return gifs.count
@@ -38,8 +41,6 @@ class HomeViewModel{
             callApi(textField.text)
         }
         return textField.resignFirstResponder()
-//        callApi(textField.text)
-//        return textField.resignFirstResponder()
     }
     
     func callApi(_ searchedText: String?){
@@ -50,16 +51,37 @@ class HomeViewModel{
         })
     }
     
-    private func fetchingData(_ searchedText: String?){
-        isLoading.value = true
+    private func clearResult(_ searchedText: String?){
+        
         if searchedText != lastSearch{
-            HomeViewModel.shared.clearResult()
+            self.results = []
         }
-        lastSearch = searchedText ?? "Trending"
-        HomeViewModel.shared.getSearchedGifs(searchedText, completion: {[weak self] success in
+    }
+    
+    private func updateSearchedText(_ searchedText: String?){
+        if let searchedText = searchedText{
+            lastSearch = searchedText
+        }else{
+            lastSearch = "Trending"
+        }
+        
+    }
+    
+    private func fetchingData(_ searchedText: String?, _ limit: Int = 30, _ offset: Int = 0){
+        isLoading.value = true
+        
+        
+        clearResult(searchedText)
+        updateSearchedText(searchedText)
+        
+        HomeViewModel.shared.getSearchedGifs(searchedText, completion: {[weak self] success, results  in
+            
+            
             if success{
                 self?.isLoaded.value = success
                 self?.isLoading.value = false
+                self?.results?.append(contentsOf: results!)
+                
             }else{
                 self?.error.value = true
                 self?.isLoading.value = false
@@ -78,7 +100,7 @@ class HomeViewModel{
     }
     
     private func getPreviewGifPath(_ indexPath: IndexPath) -> String{
-        guard let gifs = HomeViewModel.shared.getGifResults() else{
+        guard let gifs = results else{
             return ""
         }
         guard let path = gifs[indexPath.row].placeHolder else { return "" }
@@ -86,7 +108,7 @@ class HomeViewModel{
     }
     
     private func getOriginalGifPath(_ indexPath: IndexPath) -> String{
-        guard let gifs = HomeViewModel.shared.getGifResults() else{
+        guard let gifs = results else{
             return ""
         }
         guard let path = gifs[indexPath.row].original else { return "" }
@@ -126,15 +148,6 @@ class HomeViewModel{
     }
     func searchForNextOffset(){
         HomeViewModel.shared.goToNextPage()
-        isLoading.value = true
-        HomeViewModel.shared.getSearchedGifs(self.lastSearch, completion: {[weak self] success in
-            if success{
-                self?.isLoaded.value = success
-                self?.isLoading.value = false
-            }else{
-                self?.error.value = true
-                self?.isLoading.value = false
-            }
-        })
+        fetchingData(lastSearch)
     }
 }
