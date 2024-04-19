@@ -14,21 +14,21 @@ final class NetworkService{
     private let providerType: ProviderType = .gify
     private lazy var basePath: String = providerType == .gify ? "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=2&offset=1&rating=G&lang=en&q=" : "https://g.tenor.com/v1/search?q="
     
-    private let searchText: String = "Trending"
+//    private let searchText: String = "Trending"
 
-    private var currentOffset: Int = 0
-    private var limit: Int = 30
-    func goToNextPage(){
-        self.currentOffset += limit
-        
-    }
+//    private var currentOffset: Int = 0
+//    private var limit: Int = 30
+//    func goToNextPage(){
+//        self.currentOffset += limit
+//        
+//    }
     
-    private func getBasePathByOffset(_ searchText: String?) -> String{
+    private func getBasePathByOffset(_ searchText: String?, _ limit: Int = 30, _ offset: Int = 0) -> String{
         guard let text = searchText else{
-            let path = "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=\(limit)&offset=\(currentOffset)&rating=G&lang=en&q=" + self.searchText
+            let path = "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=\(limit)&offset=\(offset)&rating=G&lang=en&q=" + "Trending"
             return path
         }
-        let path = "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=\(limit)&offset=\(currentOffset)&rating=G&lang=en&q=" + text
+        let path = "https://api.giphy.com/v1/gifs/search?api_key=229ac3e932794695b695e71a9076f4e5&limit=\(limit)&offset=\(offset)&rating=G&lang=en&q=" + text
         return path
     }
     
@@ -55,7 +55,7 @@ final class NetworkService{
     
     //MARK: Respose for gify, tenor
     private func getResponse(_ searchFor: String?, _ limit: Int = 30, _ offset: Int = 0, completion: @escaping(_ success: Bool, [Gif]?)-> Void){
-        guard let url = URL(string: getBasePathByOffset(searchFor)) else {
+        guard let url = URL(string: getBasePathByOffset(searchFor, limit, offset)) else {
             return
         }
         
@@ -200,8 +200,8 @@ final class NetworkService{
     }
     
     //This func will be called by the VM
-    func getSearchedGifs(_ searchFor: String?, completion: @escaping(_ success: Bool, [Gif]?)-> Void){
-        getResponse(searchFor, completion: {success, result in
+    func getSearchedGifs(_ searchFor: String?, _ limit: Int = 30, _ offset: Int = 0, completion: @escaping(_ success: Bool, [Gif]?)-> Void){
+        getResponse(searchFor,limit, offset, completion: {success, result in
             completion(success, result)
         })
     }

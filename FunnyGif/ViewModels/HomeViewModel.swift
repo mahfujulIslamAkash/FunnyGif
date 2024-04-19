@@ -20,6 +20,10 @@ class HomeViewModel{
     private var results: [Gif]?
     
     private var lastSearch: String = "Trending"
+    private var currentOffset: Int = 0
+    private var limit: Int = 30
+    
+    
     func countOfGifsResult() -> Int{
         guard let gifs = results else{
             return 0
@@ -46,7 +50,7 @@ class HomeViewModel{
     func callApi(_ searchedText: String?){
         checkInternet(completion: {[weak self] success in
             if success{
-                self?.fetchingData(searchedText)
+                self?.fetchingData(searchedText, self?.limit ?? 5, self?.currentOffset ?? 0)
             }
         })
     }
@@ -55,6 +59,7 @@ class HomeViewModel{
         
         if searchedText != lastSearch{
             self.results = []
+            isLoading.value = true
         }
     }
     
@@ -68,13 +73,12 @@ class HomeViewModel{
     }
     
     private func fetchingData(_ searchedText: String?, _ limit: Int = 30, _ offset: Int = 0){
-        isLoading.value = true
         
         
         clearResult(searchedText)
         updateSearchedText(searchedText)
         
-        HomeViewModel.shared.getSearchedGifs(searchedText, completion: {[weak self] success, results  in
+        HomeViewModel.shared.getSearchedGifs(searchedText, limit, offset, completion: {[weak self] success, results  in
             
             
             if success{
@@ -114,6 +118,10 @@ class HomeViewModel{
         guard let path = gifs[indexPath.row].original else { return "" }
         return path
     }
+    private func goToNextPage(){
+        self.currentOffset += limit
+        fetchingData(lastSearch, limit, currentOffset)
+    }
     
     func viewModelOfGif(_ indexPath: IndexPath) -> GIFViewModel{
         let path = getPreviewGifPath(indexPath)
@@ -147,7 +155,7 @@ class HomeViewModel{
         }
     }
     func searchForNextOffset(){
-        HomeViewModel.shared.goToNextPage()
-        fetchingData(lastSearch)
+        goToNextPage()
+        
     }
 }
