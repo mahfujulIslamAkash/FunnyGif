@@ -9,7 +9,8 @@ import UIKit
 class HomeViewController: UIViewController {
     
     // MARK: - UI Components
-    
+    var index = 0
+    var limit = 30
     /// Custom search field for user input
     lazy var customSearchField: CustomSearchField = {
         let field = CustomSearchField(motherSize: CGSize(width: view.frame.width, height: 65))
@@ -84,7 +85,11 @@ class HomeViewController: UIViewController {
         homeViewModel.isLoaded.binds({[weak self] success in
             if let _ = success {
                 DispatchQueue.main.async {
-                    self?.GIFCollection.reloadData()
+                    if let items = self?.homeViewModel.reloadIndexes(){
+                        self?.GIFCollection.insertItems(at: items)
+                    }else{
+                        self?.GIFCollection.reloadData()
+                    }
                 }
             }
         })
@@ -145,15 +150,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return homeViewModel.sizeOfCell(collectionView.frame.width)
     }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        homeViewModel.copyToClipboard(indexPath)
-    }
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if homeViewModel.isThisLastCell(indexPath: indexPath){
-            //need to call new offset data
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if homeViewModel.endOfCollectionView(scrollView){
             homeViewModel.searchForNextOffset()
-        }else{
-            //ignore
         }
     }
     

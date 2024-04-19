@@ -20,7 +20,7 @@ class HomeViewModel {
     
     private var lastSearch: String = "Trending"
     private var currentOffset: Int = 0
-    private var limit: Int = 40
+    private var limit: Int = 42
     
     // MARK: - Observable Properties
     
@@ -37,7 +37,36 @@ class HomeViewModel {
         }
         return gifs.count
     }
-    
+    func reloadPoint()->Int{
+        guard let gifs = results else {
+            return 0
+        }
+        return gifs.count
+    }
+    func fullReload() -> Bool{
+        if let gifs = results{
+            if gifs.count <= limit{
+                return true
+            }else{
+                return false
+            }
+        }
+        return false
+    }
+    func reloadIndexes() ->[IndexPath]?{
+        
+        var indexPathsOfNewItems: [IndexPath]?
+        if let gifs = results{
+            if gifs.count > 0{
+                indexPathsOfNewItems = []
+                for i in gifs.count-limit..<gifs.count{
+                    let indexPath = IndexPath(row: i, section: 0)
+                    indexPathsOfNewItems?.append(indexPath)
+                }
+            }
+        }
+        return indexPathsOfNewItems
+    }
     /// Calculates the size of the collection view cell based on the parent widget's width
     func sizeOfCell(_ parentWidget: CGFloat) -> CGSize {
         let width = (parentWidget - 40) / 3
@@ -164,8 +193,12 @@ class HomeViewModel {
     }
     
     /// Checks if the given indexPath represents the last cell in the collection view
-    func isThisLastCell(indexPath: IndexPath) -> Bool {
-        if indexPath.row == countOfGifsResult() - 1 {
+    func endOfCollectionView(_ scrollView: UIScrollView) -> Bool {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let screenHeight = scrollView.frame.size.height
+        // Check if the user has scrolled to the bottom of the collection view
+        if offsetY > contentHeight - screenHeight {
             return true
         } else {
             return false
